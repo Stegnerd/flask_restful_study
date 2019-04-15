@@ -17,4 +17,6 @@ api.add_resource(Item, '/item/<string:name>')
 api.add_resource(ItemList, '/items')
 api.add_resource(UserRegister, '/register')
 
-app.run(port=5000, debug=True)
+# this way we only run this if we called app.py not if we import something from this
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
