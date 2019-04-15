@@ -90,7 +90,7 @@ class Item(Resource):
         else:
             try:
                 # update is a built in method for dictionary
-                self.update(data)
+                self.update(updated_item)
             except:
                 return {"message": "An error occured"}, 500
         return updated_item
@@ -109,4 +109,15 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        return {"Items": items}
+        connection = sqlite3.connect("data.db")
+        cursor = connection.cursor()
+
+        query = "SELECT * FROM items"
+        result = cursor.execute(query)
+        items = []
+        for row in result:
+            items.append({"name": row[0], "price": row[1]})
+
+        connection.close()
+
+        return {"items": items}
